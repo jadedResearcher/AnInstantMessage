@@ -101,6 +101,15 @@ button{
   margin-left: auto;
   width: 200px;
   height: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  font-weight: lighter;
+  font-style: italic;
+  color: grey;
+
+
 }
 
 .you{

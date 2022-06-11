@@ -12,6 +12,8 @@
     const pingAudio = new Audio("264828__cmdrobot__text-message-or-videogame-jump.mp3");
     let skipping = false;
 
+    let thought_num = 0;
+
     const sleep = (ms) => {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -58,12 +60,20 @@
       isTypingStop();
     }
 
+    const getRandomNumberBetween = (min, max) => {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
     //low z-index, random styling but always within the chat body (its relative)
     const thoughtLine = (line) => {
+      thought_num ++;
       const body = document.querySelector("#chat-body");
       const ele = document.createElement("div");
       ele.className = "thought";
       ele.innerHTML = line;
+      ele.style.paddingTop = thought_num;
+      const color = getRandomNumberBetween(150,240)-(thought_num*10);
+      ele.style.color = `rgb(${color},${color},${color})`;
       body.append(ele);
       body.scrollTop = body.scrollHeight;
 
@@ -76,9 +86,11 @@
       if (line.includes(me)) {
         myLine(line, ping)
         !skipping && await sleep(1000);
+        thought_num = 0;
       } else if (line.includes(you)) {
         yourLine(line, ping)
         !skipping && await sleep(1000);
+        thought_num = 0;
       } else {
         thoughtLine(line);
       }
