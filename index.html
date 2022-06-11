@@ -1,0 +1,117 @@
+<html>
+
+<head>
+  <title>An Instant Message</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="icon" href="alt.ico" />
+  <script src="story.js"></script>
+  <script>
+
+
+
+    const pingAudio = new Audio("264828__cmdrobot__text-message-or-videogame-jump.mp3");
+
+    const sleep = (ms) => {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    const myLine = (line, ele) => {
+      const fulcrum = line.indexOf(":"); //first : found is where it splits in half
+      const span1 = document.createElement('span');
+      span1.className = "me";
+      span1.innerHTML = `${me}:`;
+      const span2 = document.createElement('span');
+      span2.innerHTML = line.substring(fulcrum+1).trim();
+      ele.append(span1);
+      ele.append(span2);
+      pingAudio.play();
+    }
+
+
+    const yourLine = (line, ele) => {
+      const fulcrum = line.indexOf(":"); //first : found is where it splits in half
+      const span1 = document.createElement('span');
+      span1.className = "you";
+      span1.innerHTML = `${you}:`;
+      const span2 = document.createElement('span');
+      span2.innerHTML = line.substring(fulcrum+1).trim();
+      ele.append(span1);
+      ele.append(span2);
+      pingAudio.play();
+    }
+
+    //low z-index, random styling but always within the chat body (its relative)
+    const thoughtLine = (line) => {
+
+    }
+
+    const processLine = (line) => {
+      if(line.trim() === ""){
+        return;
+      }
+      const body = document.querySelector("#chat-body");
+
+      if (line.includes(thought)) {
+        thoughtLine(line);
+      }
+      else {
+        const ele = document.createElement("div");
+        ele.className  = "chat-line";
+        body.append(ele);
+        if (line.includes(me)) {
+          myLine(line,ele)
+        } else{
+          yourLine(line,ele)
+        }
+      }
+    }
+
+    const setUpThePast = ()=>{
+      const container = document.querySelector("#chat-container");
+      const button = document.querySelector("#button");
+      const lines = backstory.split("\n");
+
+      for (let line of lines) {
+        processLine(line,container);
+      }
+    }
+
+    window.onload = ()=>{
+      setUpThePast();
+    }
+
+    const play= async () => {
+      const lines = story.split("\n");
+      const container = document.querySelector("#chat-container");
+      const button = document.querySelector("#button");
+      button.style.display = "none";
+      container.style.display = "block";
+
+      for (let line of lines) {
+        processLine(line,container);
+        await sleep(5000);
+      }
+    }
+
+
+  </script>
+</head>
+
+
+<body>
+
+
+  <img src="http://farragofiction.com/SBURBSim/images/Skaia_Clouds.png" id="fake-background"></div>
+  <button id="button" onClick="play()">Incoming Messages...</button>
+
+  <div id="chat-container">
+    <div id="chat-header">PERSON1 -- Instant Messaging</div>
+    <div id="chat-body">
+    </div>
+  </div>
+
+  </div>
+
+</body>
+
+</html>

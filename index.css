@@ -1,0 +1,98 @@
+@font-face {
+  font-family: nunito;
+  src: url("./Fonts/nunito/Nunito-Regular.ttf");
+}
+
+button{
+  background: #c4c4c4;
+  color: black;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  display: block;
+}
+
+#chat-container{
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
+  margin-top: 65px;
+  height: 555px;
+  width: 550px;
+  color: white;
+  text-decoration: none;
+  background: #c4c4c4;
+  border-radius: 2px;
+  border: 5px solid #1f3f87;
+  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, .4);
+}
+
+#chat-header{
+  height: 33px;
+  color: white;
+  background-color: #1f3f87;
+  font-size: 14px;
+  padding-left: 20px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 26px;
+  display: flex;
+}
+
+#fake-background{
+  width: 100%;
+  opacity: 0.5;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: -999;
+  pointer-events: none;
+
+}
+
+#chat-body{
+  color: #1f3f87;
+  background-color: #f8fafa;
+  position: relative;
+  width: 500px;
+  height: 472px;
+  margin-left: 30px;
+  border-left: 5px solid #a4a4a4;
+  border-top: 5px solid #a4a4a4;
+  border-right: 5px solid #e4e4e4;
+  border-bottom: 5px solid #e4e4e4;
+
+  margin-top: 10px;
+  overflow: auto;
+}
+
+#chat-body div{
+    margin-left: 5px;
+    padding-top: 5px;
+}
+
+.time-code {
+  color: grey;
+  font-weight: lighter;
+  font-style: italic;
+  text-align: center;
+}
+
+.chat-line{
+  width: 90%;
+  line-height: 20px;
+  color: black;
+}
+
+.me{
+  color: blue;
+  margin-right: 10px;
+  font-weight: bolder;
+}
+
+.you{
+  color: red;
+  font-weight: bolder;
+  margin-right: 10px;
+}
