@@ -10,6 +10,7 @@
 
 
     const pingAudio = new Audio("264828__cmdrobot__text-message-or-videogame-jump.mp3");
+    let skipping = false;
 
     const sleep = (ms) => {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -31,6 +32,9 @@
       if (ping) {
         pingAudio.play();
       }
+      body.scrollTop = body.scrollHeight;
+      isTypingStop();
+
     }
 
 
@@ -50,24 +54,35 @@
       if (ping) {
         pingAudio.play();
       }
+      body.scrollTop = body.scrollHeight;
+      isTypingStop();
     }
 
     //low z-index, random styling but always within the chat body (its relative)
     const thoughtLine = (line) => {
+      const body = document.querySelector("#chat-body");
+      const ele = document.createElement("div");
+      ele.className = "thought";
+      ele.innerHTML = line;
+      body.append(ele);
+      body.scrollTop = body.scrollHeight;
 
     }
 
-    const processLine = (line, ping) => {
+    const processLine = async (line, ping) => {
       if (line.trim() === "") {
         return;
       }
       if (line.includes(me)) {
         myLine(line, ping)
+        !skipping && await sleep(1000);
       } else if (line.includes(you)) {
         yourLine(line, ping)
+        !skipping && await sleep(1000);
       } else {
         thoughtLine(line);
       }
+
     }
 
     const setUpThePast = () => {
@@ -80,17 +95,27 @@
       }
     }
 
+    window.onmousedown = () => {
+      skipping = true;
+    }
+
+    window.onmouseup = () => {
+      skipping = false;
+    }
+
     window.onload = () => {
       setUpThePast();
     }
 
-    const isTypingStart = ()=>{
+    const isTypingStart = () => {
       console.log("JR NOTE: start")
+      const body = document.querySelector("#chat-body");
       const t = document.querySelector("#typing");
       t.style.display = "block";
+      body.append(t);
     }
 
-    const isTypingStop = ()=>{
+    const isTypingStop = () => {
       console.log("JR NOTE: stop")
       const t = document.querySelector("#typing");
       t.style.display = "none";
@@ -104,34 +129,27 @@
       container.style.display = "block";
 
       for (let line of lines) {
-        if (line.includes(me) || line.includes(you)) {
-          isTypingStop();
-          await sleep(1000);
-          const sleep_amount = line.length * 50;
-          console.log("JR NOTE: sleeping for, ", sleep_amount)
-          isTypingStart();
+        if (line.trim() !== "") {
+          isTypingStart(); //is typing is visible even if its a thought (you're waiting);
+          const sleep_amount = skipping? 50: line.length * 50;
+          console.log("JR NOTE: sleeping for, ", sleep_amount);
           await sleep(sleep_amount);
-          isTypingStop();
+          await processLine(line, true);
         }
-        processLine(line, true);
       }
     }
-
-
   </script>
 </head>
 
 
 <body>
-
-
   <img src="http://farragofiction.com/SBURBSim/images/Skaia_Clouds.png" id="fake-background"></div>
   <button id="button" onClick="play()">Incoming Messages...</button>
 
   <div id="chat-container">
     <div id="chat-header">PERSON1 -- Instant Messaging</div>
     <div id="chat-body">
-    <div id = "typing">Typing</div>
+      <div id="typing">Typing</div>
     </div>
   </div>
 

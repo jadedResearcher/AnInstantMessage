@@ -20,5 +20,15 @@ you: but does it have a vibe?
 i sure hope it does
 please tell me it does
 you: i think it does
+why aren't you messaging me back
+where are you
+did you see
+is my internet out
+where are you
+am i annoying
+did i bore you
+where are you
 me: it has a super long line so we can do things with it and see just how long long could be and man the anxiety of waiting for someone to text somethin
+you: okay yeah cool
+you: cool
 `;
