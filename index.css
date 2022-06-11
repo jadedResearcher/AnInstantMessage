@@ -39,6 +39,10 @@ button{
   display: flex;
 }
 
+#chat-title{
+  margin-left: 10px;
+}
+
 #fake-background{
   width: 100%;
   opacity: 0.5;

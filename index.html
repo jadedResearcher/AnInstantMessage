@@ -134,7 +134,7 @@
     }
 
     const play = async () => {
-      const title = document.querySelector("#chat-header");
+      const title = document.querySelector("#chat-title");
       title.innerHTML = `${you}  -- Instant Messaging`
       const lines = story.split("\n");
       const container = document.querySelector("#chat-container");
@@ -161,7 +161,8 @@
   <button id="button" onClick="play()">Incoming Messages...</button>
 
   <div id="chat-container">
-    <div id="chat-header">PERSON1 -- Instant Messaging</div>
+    <div id="chat-header">
+     <img id="chat-icon" src = "http://farragofiction.com/ZampanioHotlink/AnxietySim_talk_logo.png"><span id="chat-title">PERSON1 -- Instant Messaging</span> </div>
     <div id="chat-body">
       <div id="typing">Typing</div>
     </div>
