@@ -134,6 +134,8 @@
     }
 
     const play = async () => {
+      const title = document.querySelector("#chat-header");
+      title.innerHTML = `${you}  -- Instant Messaging`
       const lines = story.split("\n");
       const container = document.querySelector("#chat-container");
       const button = document.querySelector("#button");
