@@ -79,6 +79,15 @@ button{
   text-align: center;
 }
 
+#typing {
+  color: grey;
+  font-weight: lighter;
+  font-style: italic;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+}
+
 .chat-line{
   width: 90%;
   line-height: 20px;
@@ -95,4 +104,26 @@ button{
   color: red;
   font-weight: bolder;
   margin-right: 10px;
+}
+
+#typing:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 3000ms infinite;      
+  animation: ellipsis steps(4,end) 3000ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 20px;    
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 20px;    
+  }
 }

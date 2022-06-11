@@ -15,29 +15,41 @@
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    const myLine = (line, ele) => {
+    const myLine = (line, ping) => {
+      const body = document.querySelector("#chat-body");
+      const ele = document.createElement("div");
+      ele.className = "chat-line";
+      body.append(ele);
       const fulcrum = line.indexOf(":"); //first : found is where it splits in half
       const span1 = document.createElement('span');
       span1.className = "me";
-      span1.innerHTML = `${me}:`;
+      span1.innerHTML = `${me}`;
       const span2 = document.createElement('span');
-      span2.innerHTML = line.substring(fulcrum+1).trim();
+      span2.innerHTML = line.substring(fulcrum + 1).trim();
       ele.append(span1);
       ele.append(span2);
-      pingAudio.play();
+      if (ping) {
+        pingAudio.play();
+      }
     }
 
 
-    const yourLine = (line, ele) => {
+    const yourLine = (line, ping) => {
+      const body = document.querySelector("#chat-body");
+      const ele = document.createElement("div");
+      ele.className = "chat-line";
+      body.append(ele);
       const fulcrum = line.indexOf(":"); //first : found is where it splits in half
       const span1 = document.createElement('span');
       span1.className = "you";
-      span1.innerHTML = `${you}:`;
+      span1.innerHTML = `${you}`;
       const span2 = document.createElement('span');
-      span2.innerHTML = line.substring(fulcrum+1).trim();
+      span2.innerHTML = line.substring(fulcrum + 1).trim();
       ele.append(span1);
       ele.append(span2);
-      pingAudio.play();
+      if (ping) {
+        pingAudio.play();
+      }
     }
 
     //low z-index, random styling but always within the chat body (its relative)
@@ -45,42 +57,46 @@
 
     }
 
-    const processLine = (line) => {
-      if(line.trim() === ""){
+    const processLine = (line, ping) => {
+      if (line.trim() === "") {
         return;
       }
-      const body = document.querySelector("#chat-body");
-
-      if (line.includes(thought)) {
+      if (line.includes(me)) {
+        myLine(line, ping)
+      } else if (line.includes(you)) {
+        yourLine(line, ping)
+      } else {
         thoughtLine(line);
-      }
-      else {
-        const ele = document.createElement("div");
-        ele.className  = "chat-line";
-        body.append(ele);
-        if (line.includes(me)) {
-          myLine(line,ele)
-        } else{
-          yourLine(line,ele)
-        }
       }
     }
 
-    const setUpThePast = ()=>{
+    const setUpThePast = () => {
       const container = document.querySelector("#chat-container");
       const button = document.querySelector("#button");
       const lines = backstory.split("\n");
 
       for (let line of lines) {
-        processLine(line,container);
+        processLine(line);
       }
     }
 
-    window.onload = ()=>{
+    window.onload = () => {
       setUpThePast();
     }
 
-    const play= async () => {
+    const isTypingStart = ()=>{
+      console.log("JR NOTE: start")
+      const t = document.querySelector("#typing");
+      t.style.display = "block";
+    }
+
+    const isTypingStop = ()=>{
+      console.log("JR NOTE: stop")
+      const t = document.querySelector("#typing");
+      t.style.display = "none";
+    }
+
+    const play = async () => {
       const lines = story.split("\n");
       const container = document.querySelector("#chat-container");
       const button = document.querySelector("#button");
@@ -88,8 +104,16 @@
       container.style.display = "block";
 
       for (let line of lines) {
-        processLine(line,container);
-        await sleep(5000);
+        if (line.includes(me) || line.includes(you)) {
+          isTypingStop();
+          await sleep(1000);
+          const sleep_amount = line.length * 50;
+          console.log("JR NOTE: sleeping for, ", sleep_amount)
+          isTypingStart();
+          await sleep(sleep_amount);
+          isTypingStop();
+        }
+        processLine(line, true);
       }
     }
 
@@ -107,6 +131,7 @@
   <div id="chat-container">
     <div id="chat-header">PERSON1 -- Instant Messaging</div>
     <div id="chat-body">
+    <div id = "typing">Typing</div>
     </div>
   </div>
 

@@ -1,7 +1,6 @@
 
-const me = "me";
-const you = "you";
-const thought = "[THOUGHT]"
+const me = "me:";
+const you = "you:";
 
 //note, for now, thoughts are not belonging to anyone
 //but if we wanna change that we'll need two types of thought markers
@@ -18,7 +17,8 @@ const story = `
 you: this is just a test
 me: yeah it really is
 you: but does it have a vibe?
-[THOUGHT] i sure hope it does
-[THOUGHT] please tell me it does
+i sure hope it does
+please tell me it does
 you: i think it does
+me: it has a super long line so we can do things with it and see just how long long could be and man the anxiety of waiting for someone to text somethin
 `;
